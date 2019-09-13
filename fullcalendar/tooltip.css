@@ -14,7 +14,7 @@
     width: 150px;
     border-radius: 3px;
     box-shadow: 0 0 2px rgba(0,0,0,0.5);
-    padding: 10px;
+    padding: 8px;
     text-align: center;
   }
   .style5 .tooltip {
@@ -22,7 +22,7 @@
     color: #FFFFFF;
     max-width: 200px;
     width: auto;
-    font-size: .8rem;
+    font-size: .6rem;
     padding: .5em 1em;
   }
   .popper .popper__arrow,

@@ -36,6 +36,14 @@ $location = array(
 	5 => "스톰송",
 	6 => "볼둔",
 	);
+$area_color = array(
+	1 => "#00A2E8",
+	2 => "#22B14C",
+	3 => "#A349A4",
+	4 => "#FF7F27",
+	5 => "#ED1C24",
+	6 => "#3F48CC",
+	);	
 // 기준 시작시간
 $seedDateTimeStr = "2019-01-01 17:00:00";
 $seedIndex = 1;
@@ -87,7 +95,8 @@ for($i = 0; $i < 1000; $i++) {
           title: '".$location[$seedIndex]."',
           start: '".date_format($startDateTime, "Y-m-d H:i:s")."',
           end: '".date_format($endDateTime, "Y-m-d H:i:s")."',
-		  description: '".amPm(date_format($startDateTime, "A H"))." ~ ".amPm(date_format($endDateTime, "A H"))."',
+		  description: ' ".$location[$seedIndex]." : ".amPm(date_format($startDateTime, "A g"))."시 ~ ".amPm(date_format($endDateTime, "A g"))."시',
+		  color: '".$area_color[$seedIndex]."',		  
         },";	
 
 	$seedIndex++;
@@ -114,9 +123,18 @@ for($i = 0; $i < 1000; $i++) {
           placement: 'top',
           trigger: 'hover',
           container: 'body'
-        });
+		});
+		if (event.color) {
+			element.css('background-color', event.color)
+		}		
       },
 
+	//   eventRender: function (event, element, view) {
+	// 	if (event.color) {
+	// 		element.css('background-color', event.color)
+	// 	}		
+	//  },
+				 	  
       header: {
         left: 'prev,next today',
         center: 'title',

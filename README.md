@@ -4,3 +4,4 @@
 ## 원소스에 캘린더 입히기
 - Fullcalendar4
 - MouseOver 상세시간 표시
+- 지역별 색상 구분
