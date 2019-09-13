@@ -9,10 +9,18 @@
 <script src='../../fullcalendar/packages/core/main.js'></script>
 <script src='../../fullcalendar/packages/daygrid/main.js'></script>
 <script src='../../fullcalendar/packages/list/main.js'></script>
-<!-- <script src='../../fullcalendar/packages/core/locales-all.min.js'></script> -->
-<script src='../../fullcalendar/packages/core/locales-all.js'></script>
+<script src='../../fullcalendar/packages/core/locales-all.min.js'></script>
+
+<script src='../../fullcalendar/popper.min.js'></script>
+<script src='../../fullcalendar/tooltip.min.js'></script>
+<link href='../../fullcalendar/tooltip.css' rel='stylesheet' />
 
 <?php
+function amPm($str){
+	$str = str_replace("AM", "오전", $str);
+	$str = str_replace("PM", "오후", $str);
+	return $str;
+}
 /*
 순서:
 1. 드러스트바 -> 2. 줄다자르 -> 3. 티라가드 -> 4. 나즈미르 -> 5. 스톰송 -> 6. 볼둔
@@ -74,22 +82,13 @@ for($i = 0; $i < 1000; $i++) {
 	} else {
 		//echo sprintf("<b><font style='color:#CD2714'>%s(%s) ~ %s(%s) [%s]</font></b><br />", date_format($startDateTime, "Y-m-d H:i:s"), $startWeek, date_format($endDateTime, "Y-m-d H:i:s"), $endWeek, $location[$seedIndex]);
 	}
-/*
-	$T1 = date('Y-m-d H:i:s',strtotime($date. ' '.$timezone)); 
-	$T2 = $endDateTime->format('T');
-	$calendar_print .= "        {
-          title: '".$location[$seedIndex]."',
-          start: '".$T1."',
-          end: '".$T2."'
-        },";
-	*/
+	//캘린더
 	$calendar_print .= "        {
           title: '".$location[$seedIndex]."',
           start: '".date_format($startDateTime, "Y-m-d H:i:s")."',
           end: '".date_format($endDateTime, "Y-m-d H:i:s")."',
-		  tooltip: 'hi',
-        },";
-	
+		  description: '".amPm(date_format($startDateTime, "A H"))." ~ ".amPm(date_format($endDateTime, "A H"))."',
+        },";	
 
 	$seedIndex++;
 	if($seedIndex > count($location)) {
@@ -109,6 +108,15 @@ for($i = 0; $i < 1000; $i++) {
     var calendar = new FullCalendar.Calendar(calendarEl, {
       plugins: [ 'dayGrid', 'list' ],
 
+      eventRender: function(info) {
+        var tooltip = new Tooltip(info.el, {
+          title: info.event.extendedProps.description,
+          placement: 'top',
+          trigger: 'hover',
+          container: 'body'
+        });
+      },
+
       header: {
         left: 'prev,next today',
         center: 'title',
@@ -117,14 +125,12 @@ for($i = 0; $i < 1000; $i++) {
 
       // customize the button names,
       // otherwise they'd all just say "list"
-	  /*
+ 
       views: {
-        listDay: { buttonText: 'list day' },
-        listWeek: { buttonText: 'list week' }
+        listWeek: { buttonText: '주' }
       },
+      //defaultView: 'listWeek',
 
-      defaultView: 'listWeek',
-	  */
       defaultDate: '<?php echo date("Y-m-d", time()); ?>',
 		  lang :"ko",
       navLinks: true, // can click day/week names to navigate views
