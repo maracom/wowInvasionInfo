@@ -11,9 +11,9 @@
 <script src='../../fullcalendar/packages/list/main.js'></script>
 <script src='../../fullcalendar/packages/core/locales-all.min.js'></script>
 
+<link href='../../fullcalendar/tooltip.css' rel='stylesheet' />
 <script src='../../fullcalendar/popper.min.js'></script>
 <script src='../../fullcalendar/tooltip.min.js'></script>
-<link href='../../fullcalendar/tooltip.css' rel='stylesheet' />
 
 <?php
 function amPm($str){
@@ -110,80 +110,60 @@ for($i = 0; $i < 1000; $i++) {
 }
 ?>
 <script>
-
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      plugins: [ 'dayGrid', 'list' ],
-
-      eventRender: function(info) {
-        var tooltip = new Tooltip(info.el, {
-          title: info.event.extendedProps.description,
-          placement: 'top',
-          trigger: 'hover',
-          container: 'body'
-		});
-		if (event.color) {
-			element.css('background-color', event.color)
-		}		
-      },
-
-	//   eventRender: function (event, element, view) {
-	// 	if (event.color) {
-	// 		element.css('background-color', event.color)
-	// 	}		
-	//  },
+	document.addEventListener('DOMContentLoaded', function() {
+		var calendarEl = document.getElementById('calendar');
+		
+    	var calendar = new FullCalendar.Calendar(calendarEl, {
+		    plugins: [ 'dayGrid', 'list' ],
+			eventRender: function(info) {
+			var tooltip = new Tooltip(info.el, {
+				title: info.event.extendedProps.description,
+				placement: 'top',
+				trigger: 'hover',
+				container: 'body'
+			});
+			if (event.color) {
+				element.css('background-color', event.color)
+			}		
+			},
 				 	  
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,listWeek'
-      },
+			header: {
+			left: 'prev,next today',
+			center: 'title',
+			right: 'dayGridMonth,listWeek'
+			},
 
-      // customize the button names,
-      // otherwise they'd all just say "list"
- 
-      views: {
-        listWeek: { buttonText: '주' }
-      },
-      //defaultView: 'listWeek',
+			// customize the button names,
+			// otherwise they'd all just say "list"
 
-      defaultDate: '<?php echo date("Y-m-d", time()); ?>',
-		  lang :"ko",
-      navLinks: true, // can click day/week names to navigate views
-      editable: false,
-      eventLimit: true, // allow "more" link when too many events
-      events: [
-		  <?php
-		  echo $calendar_print;
-		  ?>
-      ]
-    });
-	calendar.setOption('locale', 'ko');
-    calendar.render();
-  });
+			views: {
+			listWeek: { buttonText: '주' }
+			},
+			//defaultView: 'listWeek',
+
+			defaultDate: '<?php echo date("Y-m-d", time()); ?>',
+			lang :"ko",
+			navLinks: true, // can click day/week names to navigate views
+			editable: false,
+			eventLimit: true, // allow "more" link when too many events
+			events: [
+				<?php
+				echo $calendar_print;
+				?>
+			]
+    	});
+		calendar.setOption('locale', 'ko');
+		calendar.render();
+  	});
   
 </script>
+
 <style>
-
-  body {
-    margin: 40px 10px;
-    padding: 0;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
-  }
-
-  #calendar {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
+	body {margin: 40px 10px;padding: 0;	font-family: Arial, Helvetica Neue, Helvetica, sans-serif;font-size: 14px;	}
+	#calendar {max-width: 900px;margin: 0 auto;}
 </style>
 </head>
 <body>
-
   <div id='calendar'></div>
-
 </body>
 </html>
